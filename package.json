@@ -1,0 +1,20 @@
+{
+  "name": "jaz-signals",
+  "version": "0.1.0",
+  "description": "None of the other signals packages had what I wanted so shipped my own",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix"
+  },
+  "author": "Jazcash",
+  "license": "unlicense",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jazcash/jaz-signals.git"
+  }
+}
