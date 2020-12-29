@@ -1,6 +1,6 @@
 {
   "name": "jaz-signals",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "None of the other signals packages had what I wanted so shipped my own",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
