@@ -1,4 +1,4 @@
-export class Signal<T extends object = any> {
+export class Signal<T = any> {
     public bindings: Array<SignalBinding<T>> = [];
 
     public add(callback: (data: T) => void) : SignalBinding<T> {
@@ -7,21 +7,15 @@ export class Signal<T extends object = any> {
         return binding;
     }
 
-    public addOnce(callback: (data: T) => void) : SignalBinding<T> {
-        const binding = new SignalBinding<T>(this, callback, true);
-        this.bindings.push(binding);
-        return binding;
-    }
-
-    public dispatch(data: T) {
+    public dispatch(data?: T) {
         for (const binding of this.bindings) {
-            binding.execute(data);
+            binding.execute(data as T);
         }
     }
 
-    public dispose(bindingToDispose: SignalBinding){
+    public dispose(bindingToDispose: SignalBinding) {
         for (const binding of this.bindings) {
-            if (bindingToDispose === binding){
+            if (bindingToDispose === binding) {
                 bindingToDispose.destroy();
             }
         }
@@ -36,29 +30,24 @@ export class Signal<T extends object = any> {
     }
 }
 
-export class SignalBinding<T extends object = any> {
+export class SignalBinding<T = any> {
     protected signal: Signal;
     protected listener?: (data: T) => void;
-    protected destroyAfterDispatch: boolean;
 
-    constructor(signal: Signal, listener: (data: T) => void, destroyAfterDispatch = false) {
+    constructor(signal: Signal, listener: (data: T) => void) {
         this.signal = signal;
         this.listener = listener;
-        this.destroyAfterDispatch = destroyAfterDispatch;
     }
 
     public execute(data: T) {
-        if (this.listener){
+        if (this.listener) {
             this.listener(data);
-            if (this.destroyAfterDispatch) {
-                this.destroy();
-            }
         }
     }
 
     public destroy() {
         const index = this.signal.bindings.indexOf(this);
-        if (index !== -1){
+        if (index !== -1) {
             this.signal.bindings.splice(index, 1);
         }
         delete this.listener;
